@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
+import LandingPage from './components/landing-page';
+import {Route, withRouter} from 'react-router-dom';
+//import CreateAdmin from './components/auth/create-admin-form';
+import {connect} from 'react-redux';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.refreshInterval = null;
+    this.minutes = 10;
+  }
+  render(){
+    return (
+      <div className="App">
+          <Route exact path="/"  render={(props) => (
+              <LandingPage />)
+            }/>
+        </div>
+    );
+  }
+  
 }
 
-export default App;
+const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser,
+  authToken:state.auth.authToken,
+  error:state.auth.error,
+  testMode:state.auth.testMode
+});
+export default withRouter(connect(mapStateToProps)(App));
