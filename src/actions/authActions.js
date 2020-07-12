@@ -80,3 +80,43 @@ export const createAdmin = (email,password) => (dispatch) => {
         })
     )
 }
+
+const storeAuthInfo = (authToken, dispatch) => {
+    const decodedToken = jwtDecode(authToken);
+    dispatch(authSuccess(decodedToken.user,authToken));
+    saveAuthToken(authToken);
+}
+
+export const login = (email,password) => (dispatch,getState) => {
+    /*
+    const testMode = getState().auth.testMode;
+    if(testMode){     
+        console.log('is test mode');
+        setTestUrl();
+        dispatch(enableTestMode())
+    }
+    */
+    dispatch(authRequest());
+    return (
+        fetch(`${API_BASE_URL}/auth/login`,{
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
+                email,
+                password
+            })
+        })
+        .then(res => normalizeResponseErrors(res))
+        .then(res => res.json())
+        .then((jsonRes) => {
+            storeAuthInfo(jsonRes.authToken,dispatch)
+        })
+        .catch(err => {
+            console.log('error logging in',err);
+            dispatch(authError(err.message));
+            throw err
+        })
+    );
+};

@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import '../styles/center.css';
 import './styles/login.css';
 import { Link } from 'react-router-dom';
+import {login} from '../../actions/authActions';
 export class LoginForm extends React.Component{
     constructor(props){
         super(props)
@@ -15,6 +16,22 @@ export class LoginForm extends React.Component{
             pass:'',
             loading:false
         }
+    }
+
+    inputChanged = (event,key) => {
+        event.persist();
+        const value = event.target.value;
+        this.setState({
+            [key]:value
+        });
+    }
+    
+   tryLogin = (event) =>{
+        event.persist();
+        event.preventDefault();
+        //console.log(this.state.email,this.state.pass);
+        this.props.dispatch(login(this.state.email,this.state.pass));
+        
     }
 
     render(){
@@ -30,9 +47,11 @@ export class LoginForm extends React.Component{
                         <TextField required id="password" label="Password" variant="outlined" type="password" helperText={this.props.error ? 'Error Loging in' : ''} onChange={(e) => this.inputChanged(e,'pass')}/>
                     </div>
                     <div className="input-container">
-                        <CircularProgress className={displayLoading ? '' : 'hidden'} />
                         <Button className={this.displayLoading ? 'hidden' : ''} variant="contained" color="primary" type="submit">Login</Button>
                         <Button className={this.displayLoading ? 'hidden' : 'create-button'} variant="contained" color="primary"><Link className="button-link" to="/create-admin">Create</Link></Button>
+                        <div className='progress-spinner'>
+                            <CircularProgress className={displayLoading ? '' : 'hide'} size={55}/>
+                        </div>
                     </div>
                 </form>
             </div>
