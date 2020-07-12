@@ -25,3 +25,7 @@ export const LOGOUT = "LOGOUT";
 export const logoutSession = () => ({
     type:LOGOUT
 });
+
+export const createAdmin = (email,password) => (dispatch) => {
+    
+}

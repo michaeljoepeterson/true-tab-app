@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import '../styles/center.css';
 import './styles/login.css';
+import { Link } from 'react-router-dom';
 export class LoginForm extends React.Component{
     constructor(props){
         super(props)
@@ -17,6 +18,7 @@ export class LoginForm extends React.Component{
     }
 
     render(){
+        const displayLoading = this.props.loading ? true : false;
         return(
             <div className="login-container center-container">
                 <form className="login-form" onSubmit={(e) => this.tryLogin(e)}>
@@ -28,8 +30,9 @@ export class LoginForm extends React.Component{
                         <TextField required id="password" label="Password" variant="outlined" type="password" helperText={this.props.error ? 'Error Loging in' : ''} onChange={(e) => this.inputChanged(e,'pass')}/>
                     </div>
                     <div className="input-container">
-                        <CircularProgress className={this.displayLoading ? '' : 'hidden'} />
+                        <CircularProgress className={displayLoading ? '' : 'hidden'} />
                         <Button className={this.displayLoading ? 'hidden' : ''} variant="contained" color="primary" type="submit">Login</Button>
+                        <Button className={this.displayLoading ? 'hidden' : 'create-button'} variant="contained" color="primary"><Link className="button-link" to="/create-admin">Create</Link></Button>
                     </div>
                 </form>
             </div>
