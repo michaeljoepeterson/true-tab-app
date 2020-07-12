@@ -6,6 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import {connect} from 'react-redux';
 import {createAdmin} from '../../actions/authActions';
 import SnackbarWrapper from '../snackbar-wrapper';
+import { Link } from 'react-router-dom';
 //import CreateAdmin from './components/auth/create-admin-form';
 import '../styles/center.css';
 
@@ -90,8 +91,12 @@ export class CreateAdmin extends React.Component {
                       <TextField required id="password" label="Enter Password Again" variant="outlined" type="password" helperText={error ? error : ''} onChange={(e) => this.inputChanged(e,'pass2')}/>
                   </div>
                   <div className="input-container">
-                      <CircularProgress className={displayLoading ? '' : 'hidden'} />
+                    <Link className="button-link" to="/">
+                      <Button className={this.displayLoading ? 'hidden' : 'login-button'} variant="contained" color="primary">Login</Button></Link>
                       <Button className={displayLoading ? 'hidden' : ''} variant="contained" color="primary" type="submit">Create</Button>
+                      <div className='progress-spinner'>
+                            <CircularProgress className={displayLoading ? '' : 'hide'} size={55}/>
+                        </div>
                   </div>
               </form>
           </div>

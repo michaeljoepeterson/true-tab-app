@@ -48,7 +48,8 @@ export class LoginForm extends React.Component{
                     </div>
                     <div className="input-container">
                         <Button className={this.displayLoading ? 'hidden' : ''} variant="contained" color="primary" type="submit">Login</Button>
-                        <Button className={this.displayLoading ? 'hidden' : 'create-button'} variant="contained" color="primary"><Link className="button-link" to="/create-admin">Create</Link></Button>
+                        <Link className="button-link" to="/create-admin">
+                        <Button className={this.displayLoading ? 'hidden' : 'create-button'} variant="contained" color="primary">Create</Button></Link>
                         <div className='progress-spinner'>
                             <CircularProgress className={displayLoading ? '' : 'hide'} size={55}/>
                         </div>
