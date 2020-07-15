@@ -3,6 +3,7 @@ import {withRouter} from 'react-router-dom';
 //import CreateAdmin from './components/auth/create-admin-form';
 import {connect} from 'react-redux';
 import requiresLogin from '../../HOC/requires-login';
+import Chord from './chord';
 
 export class CreateChord extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ export class CreateChord extends React.Component {
   render(){
     return (
         <div className="App">
-          <p>You are logged in!</p>
+          <Chord/>
+          <Chord/>
         </div>
     );
   }
