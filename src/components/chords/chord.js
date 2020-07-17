@@ -37,7 +37,7 @@ export class Chord extends React.Component {
       for(let k = 0;k < fretNum;k++){
         let fret = 
         (<div className={'fret fret-' + k} key={k}>
-            fret {k}
+           {this.state.stringNames[i]} fret {k}
         </div>);
         frets.push(fret);
       }
