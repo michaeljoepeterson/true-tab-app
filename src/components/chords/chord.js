@@ -8,7 +8,10 @@ export class Chord extends React.Component {
     //potentially move to update lifecycle method
     let chord = props.chord ? new ChordStruct(props.chord) : new ChordStruct();
     this.state = {
-        chord
+        chord,
+        frets:4,
+        strings:6,
+        stringNames:['e','B','G','D','A','E']
     };
   }
   
@@ -27,13 +30,34 @@ export class Chord extends React.Component {
     });
   }
 
+  buildFrets = (fretNum,stringNum) => {
+    let strings = [];
+    for(let i = 0;i < stringNum;i++){
+      let frets = [];
+      for(let k = 0;k < fretNum;k++){
+        let fret = 
+        (<div className={'fret fret-' + k} key={k}>
+            fret {k} string {this.state.stringNames[i]}
+        </div>);
+        frets.push(fret);
+      }
+
+      let string = 
+        (<div className="string" key={i}>
+          {frets}
+        </div>);
+        strings.push(string);
+    }
+    return strings;
+  }
+
   render(){
-    
+    const frets = this.buildFrets(this.state.frets,this.state.strings);
     console.log(this.state.chord);
     return (
         <div className="chord" style={{backgroundImage:`url(${this.state.chord.chordImageMap.chordDiagram})`}}>
             <p>chord</p>
-            {/* <img src={this.state.chord.chordImageMap.chordDiagram} alt="chord diagram"/> */}
+            {frets}
         </div>
     );
   }
