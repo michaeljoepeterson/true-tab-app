@@ -13,7 +13,8 @@
 
 .fret{
     color:red;
-    position: absolute;
+    position: relative;
+    border: 1px solid blue;
 }
 
 .fret-0{
@@ -31,3 +32,10 @@
 .fret-3{
     
 }
+
+@media  (min-width: 400px) {
+    .string{
+        top:0.9vh;
+        margin-top: 1.5vh;
+    }
+  }

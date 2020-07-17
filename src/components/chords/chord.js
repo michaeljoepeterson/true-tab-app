@@ -37,7 +37,7 @@ export class Chord extends React.Component {
       for(let k = 0;k < fretNum;k++){
         let fret = 
         (<div className={'fret fret-' + k} key={k}>
-            fret {k} string {this.state.stringNames[i]}
+            fret {k}
         </div>);
         frets.push(fret);
       }
@@ -56,7 +56,6 @@ export class Chord extends React.Component {
     console.log(this.state.chord);
     return (
         <div className="chord" style={{backgroundImage:`url(${this.state.chord.chordImageMap.chordDiagram})`}}>
-            <p>chord</p>
             {frets}
         </div>
     );

@@ -4,6 +4,7 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import requiresLogin from '../../HOC/requires-login';
 import Chord from './chord';
+import Grid from '@material-ui/core/Grid';
 
 export class CreateChord extends React.Component {
   constructor(props) {
@@ -14,10 +15,14 @@ export class CreateChord extends React.Component {
   }
   render(){
     return (
-        <div className="App">
-          <Chord/>
-          <Chord/>
-        </div>
+        <Grid container>
+          <Grid item lg={6} xs={12}>
+            <Chord/>
+          </Grid>
+          <Grid item lg={6} xs={12}>
+            <Chord/>
+          </Grid>
+        </Grid>
     );
   }
   
