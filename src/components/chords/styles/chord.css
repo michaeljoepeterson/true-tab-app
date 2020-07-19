@@ -27,6 +27,7 @@
 .fret-r{
     width: 100%;
     position: initial;
+    border-left: 0.2em solid rgba(150,150,150,1);
 }
 
 .string-r{
@@ -77,22 +78,6 @@
     }
     
     .fret-3{
-        left: 3em;
-    }
-
-    .fret-r-0{
-        left:-1em;
-    }
-    
-    .fret-r-1{
-        left: 0.5em;
-    }
-    
-    .fret-r-2{
-        left: 1.75em;
-    }
-    
-    .fret-r-3{
         left: 3em;
     }
   }

@@ -22,6 +22,7 @@ export class CreateChord extends React.Component {
           </Grid>
           <Grid item lg={6} xs={12}>
             <ChordRefactor/>
+            <ChordRefactor fret={5}/>
           </Grid>
         </Grid>
     );

@@ -7,9 +7,10 @@ export class Chord extends React.Component {
     super(props);
     //potentially move to update lifecycle method
     let chord = props.chord ? new ChordStruct(props.chord) : new ChordStruct();
+    let fret = props.fret ? props.fret : 4
     this.state = {
         chord,
-        frets:4,
+        frets: fret,
         strings:6,
         stringNames:['e','B','G','D','A','E']
     };
@@ -36,7 +37,7 @@ export class Chord extends React.Component {
       let frets = [];
       for(let k = 0;k < fretNum;k++){
         let fret = 
-        (<div className={'fret fret-r fret-r-' + k} key={k}>
+        (<div className={'fret-r fret-r-' + k} key={k}>
            {this.state.stringNames[i]} fret {k}
         </div>);
         frets.push(fret);
