@@ -10,6 +10,13 @@ import barre3 from '../../assets/chords/3-string-barre.png';
 import barre4 from '../../assets/chords/4-string-barre.png';
 import barre5 from '../../assets/chords/5-string-barre.png';
 import barre6 from '../../assets/chords/6-string-barre.png';
+import string1 from '../../assets/chords/string1.png';
+import string2 from '../../assets/chords/string2.png';
+import string3 from '../../assets/chords/string3.png';
+import string4 from '../../assets/chords/string4.png';
+import string5 from '../../assets/chords/string5.png';
+import string6 from '../../assets/chords/string6.png';
+import fretMarker from '../../assets/chords/fret-marker.png';
 
 export default class ChordStruct{
     name = null;
@@ -29,7 +36,14 @@ export default class ChordStruct{
         barre3,
         barre4,
         barre5,
-        barre6
+        barre6,
+        string1,
+        string2,
+        string3,
+        string4,
+        string5,
+        string6,
+        fretMarker
     };
 
     constructor(options){

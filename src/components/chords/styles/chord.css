@@ -5,6 +5,12 @@
     background-repeat: no-repeat;
 }
 
+.fretMarker{
+    width:80%;
+    background-position:initial;
+    margin: auto;
+}
+
 .string{
     display: flex;
     justify-content: center;
@@ -17,6 +23,24 @@
     border: 1px solid blue;
     width: 3.75em;
 }
+
+.fret-r{
+    width: 100%;
+    position: initial;
+}
+
+.string-r{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-left: 2.5em;
+    height: 2.1em;
+}
+
+.string-r:first-child{
+    padding-top: 1.2em;
+}
+
 
 .fret-0{
     
@@ -53,6 +77,22 @@
     }
     
     .fret-3{
+        left: 3em;
+    }
+
+    .fret-r-0{
+        left:-1em;
+    }
+    
+    .fret-r-1{
+        left: 0.5em;
+    }
+    
+    .fret-r-2{
+        left: 1.75em;
+    }
+    
+    .fret-r-3{
         left: 3em;
     }
   }
