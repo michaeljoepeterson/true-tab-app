@@ -31,14 +31,20 @@ export class Chord extends React.Component {
     });
   }
 
+  fretClicked = (event) => {
+    event.persist();
+    event.stopPropagation();
+    console.log(event);
+  }
+
   buildFrets = (fretNum,stringNum) => {
     let strings = [];
     for(let i = 0;i < stringNum;i++){
       let frets = [];
       for(let k = 0;k < fretNum;k++){
         let fret = 
-        (<div className={'fret-r fret-r-' + k} key={k}>
-            <img className="string-img" src={this.state.chord.chordImageMap['string' + (i + 1)]} alt="string"></img>
+        (<div className={'fret-r fret-r-' + k} key={k} data-string={i} data-fret={k} onClick={(e) => this.fretClicked(e)}>
+            <img className="string-img" src={this.state.chord.chordImageMap['string' + (i + 1)]} alt="string" data-string={i} data-fret={k}></img>
         </div>);
         frets.push(fret);
       }
