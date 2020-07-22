@@ -7,9 +7,10 @@ export class Chord extends React.Component {
     super(props);
     //potentially move to update lifecycle method
     let chord = props.chord ? new ChordStruct(props.chord) : new ChordStruct();
+    let fret = props.fret ? props.fret : 4
     this.state = {
         chord,
-        frets:4,
+        frets: fret,
         strings:6,
         stringNames:['e','B','G','D','A','E']
     };
@@ -36,14 +37,14 @@ export class Chord extends React.Component {
       let frets = [];
       for(let k = 0;k < fretNum;k++){
         let fret = 
-        (<div className={'fret fret-' + k} key={k}>
-           {this.state.stringNames[i]} fret {k}
+        (<div className={'fret-r fret-r-' + k} key={k}>
+            <img className="string-img" src={this.state.chord.chordImageMap['string' + (i + 1)]} alt="string"></img>
         </div>);
         frets.push(fret);
       }
 
       let string = 
-        (<div className="string" key={i}>
+        (<div className="string-r" key={i}>
           {frets}
         </div>);
         strings.push(string);
@@ -55,7 +56,7 @@ export class Chord extends React.Component {
     const frets = this.buildFrets(this.state.frets,this.state.strings);
     console.log(this.state.chord);
     return (
-        <div className="chord" style={{backgroundImage:`url(${this.state.chord.chordImageMap.chordDiagram})`}}>
+        <div className="chord fretMarker" style={{backgroundImage:`url(${this.state.chord.chordImageMap.fretMarker})`}}>
             {frets}
         </div>
     );

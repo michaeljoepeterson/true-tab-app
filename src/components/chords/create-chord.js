@@ -4,7 +4,6 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import requiresLogin from '../../HOC/requires-login';
 import Chord from './chord';
-import {Chord as ChordRefactor} from './chord-refactor';
 import Grid from '@material-ui/core/Grid';
 
 export class CreateChord extends React.Component {
@@ -21,8 +20,7 @@ export class CreateChord extends React.Component {
             <Chord/>
           </Grid>
           <Grid item lg={6} xs={12}>
-            <ChordRefactor/>
-            <ChordRefactor fret={5}/>
+            <Chord fret={5}/>
           </Grid>
         </Grid>
     );

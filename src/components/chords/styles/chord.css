@@ -1,7 +1,7 @@
 .chord{
     height:15em;
     background-position: center;
-    background-size: 3.1em;
+    background-size: 3.08em;
     background-repeat: no-repeat;
 }
 
@@ -50,9 +50,9 @@
 }
 */
 .string-img{
-    transform: translate(-14%,-1.18em);
+    transform: translate(-14%,-0.6em);
     width: 123%;
-    height: 2.3em;
+    height: 1em;
 }
 
 .string-r:last-child > .fret-r{
@@ -64,44 +64,21 @@
 }
 
 .string-r:last-child > .fret-r > .string-img{
-    transform: translate(-14%,-1em);
+    transform: translate(-14%,-0.5em);
 }
 
-@media  (min-width: 400px) {
-    .string{
-        top:0.75em;
-        margin-top: 1em;
+@media  (min-width: 550px) {
+    .chord{
+        background-size: 3.1em;
     }
 
-    .fret-0{
-        left:-1em;
-    }
-    
-    .fret-1{
-        left: 0.5em;
-    }
-    
-    .fret-2{
-        left: 1.75em;
-    }
-    
-    .fret-3{
-        left: 3em;
+    .string-img{
+        transform: translate(-14%,-1.18em);
+        width: 123%;
+        height: 2.3em;
     }
 
-    .fret-r-0{
-        
+    .string-r:last-child > .fret-r > .string-img{
+        transform: translate(-14%,-1em);
     }
-    
-    .fret-r-1{
-    
-    }
-    
-    .fret-r-2{
-    
-    }
-    
-    .fret-r-3{
-        
-    }
-  }
+}
