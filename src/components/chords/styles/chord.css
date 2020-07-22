@@ -1,7 +1,7 @@
 .chord{
     height:15em;
     background-position: center;
-    background-size: contain;
+    background-size: 3.1em;
     background-repeat: no-repeat;
 }
 
@@ -30,6 +30,7 @@
     border-right: 0.2em solid rgba(150,150,150,1);
 }
 
+
 .string-r{
     display: flex;
     justify-content: center;
@@ -42,24 +43,28 @@
     padding-top: 1.2em;
 }
 
+/*
+.fret-r:first-child  > .string-img{
+    transform: translateX(-12%);
+    width:130%;
+}
+*/
 .string-img{
+    transform: translate(-14%,-1.18em);
+    width: 123%;
+    height: 2.3em;
+}
+
+.string-r:last-child > .fret-r{
+    border:none;
+}
+
+.string-r:first-child > .fret-r > .string-img{
     width: 125%;
 }
 
-.fret-0{
-    
-}
-
-.fret-1{
-    
-}
-
-.fret-2{
-    
-}
-
-.fret-3{
-    
+.string-r:last-child > .fret-r > .string-img{
+    transform: translate(-14%,-1em);
 }
 
 @media  (min-width: 400px) {
