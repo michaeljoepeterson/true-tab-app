@@ -55,7 +55,7 @@
     height: 1em;
 }
 
-.string-r:last-child > .fret-r{
+.string-r:last-of-type > .fret-r,.last-string > .fret-r{
     border:none;
 }
 
@@ -63,7 +63,7 @@
     width: 125%;
 }
 
-.string-r:last-child > .fret-r > .string-img{
+.string-r:last-of-type > .fret-r > .string-img,.last-string > .fret-r > .string-img{
     transform: translate(-14%,-0.5em);
 }
 
@@ -78,7 +78,7 @@
         height: 2.3em;
     }
 
-    .string-r:last-child > .fret-r > .string-img{
+    .string-r:last-of-type > .fret-r > .string-img,.last-string > .fret-r > .string-img{
         transform: translate(-14%,-1em);
     }
 }

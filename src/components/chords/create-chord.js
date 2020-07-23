@@ -10,18 +10,30 @@ export class CreateChord extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      selectedNote:null
     }
   }
+
+  fretClicked = (note) => {
+    this.setState({
+      selectedNote:note
+    });
+  }
+
   render(){
+    let note = this.state.selectedNote ? (
+    <div style={{textAlign:'center',width:'100%'}}>
+      <p>The last selected note is {this.state.selectedNote}</p>
+    </div>) : null;
     return (
         <Grid container>
           <Grid item lg={6} xs={12}>
-            <Chord/>
+            <Chord fretClickHandler={this.fretClicked}/>
           </Grid>
           <Grid item lg={6} xs={12}>
-            <Chord fret={5}/>
+            <Chord fret={5} fretClickHandler={this.fretClicked}/>
           </Grid>
+          {note}
         </Grid>
     );
   }
