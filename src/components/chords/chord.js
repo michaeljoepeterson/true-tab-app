@@ -58,7 +58,8 @@ export class Chord extends React.Component {
       for(let k = 0;k < fretNum;k++){
         let fret = 
         (<div className={'fret-r fret-r-' + k} key={k} data-string={i} data-fret={k + 1} onClick={(e) => this.fretClicked(e)}>
-            <img className="string-img" src={this.state.chord.chordImageMap['string' + (i + 1)]} alt="string" data-string={i} data-fret={k+1}></img>
+            <img className="string-img" src={this.state.chord.chordImageMap['string' + (i + 1)]} alt={"string " + i + " fret " + k} data-string={i} data-fret={k+1}></img>
+            <img className="finger-img" src={this.state.chord.chordImageMap.firstFinger} alt='finger'/>
         </div>);
         frets.push(fret);
       }

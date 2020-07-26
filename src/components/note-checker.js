@@ -18,4 +18,9 @@ export default class NoteChecker{
             return this.notes[adjustedIndex];
         }
     }
+    //potentially useful?
+    //find frets on string of that note
+    checkFret(string,note){
+
+    }
 }
