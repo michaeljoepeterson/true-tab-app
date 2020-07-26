@@ -16,6 +16,12 @@ import string3 from '../../assets/chords/string3.png';
 import string4 from '../../assets/chords/string4.png';
 import string5 from '../../assets/chords/string5.png';
 import string6 from '../../assets/chords/string6.png';
+import string1Muted from '../../assets/chords/string1-muted.png';
+import string2Muted from '../../assets/chords/string2-muted.png';
+import string3Muted from '../../assets/chords/string3-muted.png';
+import string4Muted from '../../assets/chords/string4-muted.png';
+import string5Muted from '../../assets/chords/string5-muted.png';
+import string6Muted from '../../assets/chords/string6-muted.png';
 import fretMarker from '../../assets/chords/fret-marker.png';
 
 export default class ChordStruct{
@@ -43,6 +49,12 @@ export default class ChordStruct{
         string4,
         string5,
         string6,
+        string1Muted,
+        string2Muted,
+        string3Muted,
+        string4Muted,
+        string5Muted,
+        string6Muted,
         fretMarker
     };
 
@@ -64,33 +76,9 @@ export default class ChordStruct{
                 "image":"",
                 "finger":0,
                 "fret":0,
-                "strings":[6],
-                "note":"e",
-                "degree":0
-            },
-            {
-                "image":"thirdFinger",
-                "finger":3,
-                "fret":3,
-                "strings":[5],
-                "note":"c",
-                "degree":1
-            },
-            {
-                "image":"secondFinger",
-                "finger":2,
-                "fret":2,
-                "strings":[4],
+                "strings":[1],
                 "note":"e",
                 "degree":3
-            },
-            {
-                "image":"",
-                "finger":0,
-                "fret":0,
-                "strings":[3],
-                "note":"g",
-                "degree":5
             },
             {
                 "image":"firstFinger",
@@ -104,10 +92,34 @@ export default class ChordStruct{
                 "image":"",
                 "finger":0,
                 "fret":0,
-                "strings":[1],
+                "strings":[3],
+                "note":"g",
+                "degree":5
+            },
+            {
+                "image":"secondFinger",
+                "finger":2,
+                "fret":2,
+                "strings":[4],
                 "note":"e",
                 "degree":3
-            }
+            },
+            {
+                "image":"thirdFinger",
+                "finger":3,
+                "fret":3,
+                "strings":[5],
+                "note":"c",
+                "degree":1
+            },
+            {
+                "image":"",
+                "finger":0,
+                "fret":0,
+                "strings":[6],
+                "note":"e",
+                "degree":0
+            }  
         ]
     };
 

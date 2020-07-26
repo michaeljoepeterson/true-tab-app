@@ -51,15 +51,68 @@ export class Chord extends React.Component {
     }
   }
 
+  buildEmtpyImgArray = (fretNum,stringNum) =>{
+    let imgArray = [];
+
+    for(let i = 0;i < stringNum;i++){
+      let stringArr = [];
+      for(let k = 0;k < fretNum;k++){
+        stringArr.push(null);
+      }
+      imgArray.push(stringArr);
+    }
+
+    return imgArray;
+  }
+
+  getFingerImg = (notePosition,fretNum) =>{
+    let fretImgs = notePosition.map(note => []);
+    for(let i = 0;i < notePosition.length;i++){
+      let noteData = notePosition[i];
+      for(let k = 0;k < fretNum;k++){
+        let fret = k + 1;
+        let noteFret = noteData.fret;
+        let noteImg = noteData.image;
+        if(fret === noteFret && noteImg !== ''){
+          fretImgs[i].push(noteImg);
+        }
+        else{
+          fretImgs[i].push(null);
+        }
+      }
+    }
+
+    return fretImgs;
+  }
+
+  getStringImg = (notePosition) =>{
+    let stringImgs = notePosition.map(note => null);
+
+    for(let i = 0;i < notePosition.length;i++){
+      let noteData = notePosition[i];
+      let stringImg = noteData.degree !== 0 ? 'string' + (i+1) : 'string' + (i+1) + 'Muted' ;
+      stringImgs[i] = stringImg;
+    }
+
+    return stringImgs;
+  }
+
   buildFrets = (fretNum,stringNum) => {
     let strings = [];
+    let stringImgs = this.getStringImg(this.state.chord.notePositions);
+    let fretImgs = this.getFingerImg(this.state.chord.notePositions,fretNum);
+    //debugger;
     for(let i = 0;i < stringNum;i++){
       let frets = [];
+      let stringImg = stringImgs[i];
+      //let stringImg = 'string1'
       for(let k = 0;k < fretNum;k++){
+        let fingerImg = fretImgs && fretImgs.length !== 0 ? fretImgs[i][k] : null;
+        let fingerElement = fingerImg ?  (<img className="finger-img" src={this.state.chord.chordImageMap[fingerImg]} alt='finger'/>) : null;
         let fret = 
         (<div className={'fret-r fret-r-' + k} key={k} data-string={i} data-fret={k + 1} onClick={(e) => this.fretClicked(e)}>
-            <img className="string-img" src={this.state.chord.chordImageMap['string' + (i + 1)]} alt={"string " + i + " fret " + k} data-string={i} data-fret={k+1}></img>
-            <img className="finger-img" src={this.state.chord.chordImageMap.firstFinger} alt='finger'/>
+            <img className="string-img" src={this.state.chord.chordImageMap[stringImg]} alt={"string " + i + " fret " + k} data-string={i} data-fret={k+1}></img>
+            {fingerElement}
         </div>);
         frets.push(fret);
       }
