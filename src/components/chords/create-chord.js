@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import requiresLogin from '../../HOC/requires-login';
 import Chord from './chord';
 import Grid from '@material-ui/core/Grid';
+import SearchList from '../sub-components/search-list';
 
 export class CreateChord extends React.Component {
   constructor(props) {
@@ -253,9 +254,11 @@ export class CreateChord extends React.Component {
     return (
         <Grid container>
           <Grid item lg={6} xs={12}>
+            <SearchList label={"Chord"}/>
             <Chord chord={this.testChordC} fretClickHandler={this.fretClicked}/>
           </Grid>
           <Grid item lg={6} xs={12}>
+            <SearchList/>
             <Chord chord={this.testChordPartialF} fret={5} fretClickHandler={this.fretClicked}/>
           </Grid>
           <Grid item lg={6} xs={12}>
