@@ -21,8 +21,8 @@ export class Chord extends React.Component {
   }
   
   componentDidMount = () => {
-    const testChord = 'C Major';
-    if(this.props.chord || testChord){
+    //const testChord = 'C Major';
+    if(!this.props.chord){
         this.getChord();
     }
       
@@ -81,13 +81,27 @@ export class Chord extends React.Component {
       5:'thumb'
     };
 
+    const barreMap = {
+      2:'barre2',
+      3:'barre3',
+      4:'barre4',
+      5:'barre5',
+      6:'barre6'
+    };
+
     let fretImgs = notePosition.map(note => []);
     for(let i = 0;i < notePosition.length;i++){
       let noteData = notePosition[i];
       for(let k = 0;k < fretNum;k++){
         let fret = k + 1;
         let noteFret = noteData.fret;
-        let noteImg = fingerMap[noteData.finger];
+        let noteImg = null;
+        if(noteData.strings.length === 1){
+          noteImg = fingerMap[noteData.finger];
+        }
+        else if(noteData.strings.length > 1){
+          noteImg = barreMap[noteData.strings.length];
+        }
         if(fret === noteFret && noteImg !== '' && noteImg){
           fretImgs[i].push(noteImg);
         }
@@ -131,7 +145,11 @@ export class Chord extends React.Component {
       //let stringImg = 'string1'
       for(let k = 0;k < fretNum;k++){
         let fingerImg = fretImgs && fretImgs.length !== 0 ? fretImgs[i][k] : null;
-        let fingerElement = fingerImg ?  (<img className="finger-img" src={this.state.chord.chordImageMap[fingerImg]} alt='finger' data-string={i} data-fret={k+1}/>) : null;
+        let fingerElement = null;
+        if(fingerImg){
+          let fingerClasses = fingerImg.includes('barre') ? 'finger-img barre-img' : 'finger-img';
+          fingerElement = (<img className={fingerClasses} src={this.state.chord.chordImageMap[fingerImg]} alt='finger' data-string={i} data-fret={k+1}/>);
+        }
         let fret = 
         (<div className={'fret-r fret-r-' + k} key={k} data-string={i} data-fret={k + 1} onClick={(e) => this.fretClicked(e)}>
             <img className="string-img" src={this.state.chord.chordImageMap[stringImg]} alt={"string " + i + " fret " + k} data-string={i} data-fret={k+1}/>

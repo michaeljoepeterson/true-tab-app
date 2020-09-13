@@ -74,6 +74,10 @@
     width: 2em;
 }
 
+.barre-img{
+    height:12em;
+}
+
 @media  (min-width: 550px) {
     .chord{
         background-size: 3.1em;
@@ -92,5 +96,10 @@
     .finger-img{
         top: -4.2em;
         width: auto;
+    }
+
+    .barre-img{
+        height:auto;
+        max-height:14em;
     }
 }

@@ -123,5 +123,13 @@ export default class ChordStruct{
         ]
     };
 
+    testChordFullF = {
+
+    };
+
+    testChordPartialF = {
+
+    };
+
 }
 
