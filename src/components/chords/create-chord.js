@@ -19,7 +19,7 @@ export class CreateChord extends React.Component {
       selectedNote:note
     });
   }
-
+  //chord selectors here then feed chord to chord component
   render(){
     let note = this.state.selectedNote ? (
     <div style={{textAlign:'center',width:'100%'}}>

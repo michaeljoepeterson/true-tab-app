@@ -1,6 +1,7 @@
 import React from 'react';
 import ChordStruct from './chord-struct';
 import NoteChecker from '../note-checker';
+import {sixStringNames} from '../../config';
 import './styles/chord.css'
 
 export class Chord extends React.Component {
@@ -9,7 +10,7 @@ export class Chord extends React.Component {
     //potentially move to update lifecycle method
     let chord = props.chord ? new ChordStruct(props.chord) : new ChordStruct();
     let fret = props.fret ? props.fret : 4;
-    this.stringNames = ['e','B','G','D','A','E'];
+    this.stringNames = sixStringNames;
     this.noteChecker = new NoteChecker();
     this.state = {
         chord,
@@ -64,8 +65,16 @@ export class Chord extends React.Component {
 
     return imgArray;
   }
-
+  //make dynamic
   getFingerImg = (notePosition,fretNum) =>{
+    const fingerMap = {
+      1:'firstFinger',
+      2:'secondFinger',
+      3:'thirdFinger',
+      4:'fourthFinger',
+      5:'thumb'
+    };
+
     let fretImgs = notePosition.map(note => []);
     for(let i = 0;i < notePosition.length;i++){
       let noteData = notePosition[i];
@@ -86,12 +95,20 @@ export class Chord extends React.Component {
   }
 
   getStringImg = (notePosition) =>{
-    let stringImgs = notePosition.map(note => null);
-
-    for(let i = 0;i < notePosition.length;i++){
-      let noteData = notePosition[i];
-      let stringImg = noteData.degree !== 0 ? 'string' + (i+1) : 'string' + (i+1) + 'Muted' ;
-      stringImgs[i] = stringImg;
+    let stringImgs = [];
+    if(notePosition && notePosition.length > 0){
+      stringImgs = notePosition.map(note => null);
+      for(let i = 0;i < notePosition.length;i++){
+        let noteData = notePosition[i];
+        let stringImg = noteData.degree !== 0 ? 'string' + (i+1) : 'string' + (i+1) + 'Muted' ;
+        stringImgs[i] = stringImg;
+      }
+    }
+    else{
+      this.stringNames.forEach((string,i) => {
+        let stringImg = 'string' + (i+1);
+        stringImgs[i] = stringImg;
+      });
     }
 
     return stringImgs;
@@ -100,6 +117,7 @@ export class Chord extends React.Component {
   buildFrets = (fretNum,stringNum) => {
     let strings = [];
     let stringImgs = this.getStringImg(this.state.chord.notePositions);
+    debugger;
     let fretImgs = this.getFingerImg(this.state.chord.notePositions,fretNum);
     //debugger;
     for(let i = 0;i < stringNum;i++){
