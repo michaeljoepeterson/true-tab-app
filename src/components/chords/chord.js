@@ -36,19 +36,25 @@ export class Chord extends React.Component {
   }
 
   fretClicked = (event) => {
-    event.persist();
-    event.stopPropagation();
-    console.log(event);
-    let fret = event.target.dataset.fret;
-    let stringIndex = event.target.dataset.string;
-    let string = this.stringNames[stringIndex];
-    let note = this.noteChecker.checkNote(string,fret);
-    console.log(note);
-    this.setState({
-      selectedNote:note
-    });
-    if(this.props.fretClickHandler){
-      this.props.fretClickHandler(note);
+    try{
+      event.persist();
+      event.stopPropagation();
+      console.log(event);
+      let fret = event.target.dataset.fret;
+      let stringIndex = event.target.dataset.string;
+      let string = this.stringNames[stringIndex];
+      let note = this.noteChecker.checkNote(string,fret);
+      console.log(note);
+      this.setState({
+        selectedNote:note
+      });
+      if(this.props.fretClickHandler){
+        this.props.fretClickHandler(note);
+      }
+
+    }
+    catch(err){
+      console.log('error getting note: ',err);
     }
   }
 
@@ -81,8 +87,8 @@ export class Chord extends React.Component {
       for(let k = 0;k < fretNum;k++){
         let fret = k + 1;
         let noteFret = noteData.fret;
-        let noteImg = noteData.image;
-        if(fret === noteFret && noteImg !== ''){
+        let noteImg = fingerMap[noteData.finger];
+        if(fret === noteFret && noteImg !== '' && noteImg){
           fretImgs[i].push(noteImg);
         }
         else{
@@ -117,7 +123,6 @@ export class Chord extends React.Component {
   buildFrets = (fretNum,stringNum) => {
     let strings = [];
     let stringImgs = this.getStringImg(this.state.chord.notePositions);
-    debugger;
     let fretImgs = this.getFingerImg(this.state.chord.notePositions,fretNum);
     //debugger;
     for(let i = 0;i < stringNum;i++){
@@ -126,10 +131,10 @@ export class Chord extends React.Component {
       //let stringImg = 'string1'
       for(let k = 0;k < fretNum;k++){
         let fingerImg = fretImgs && fretImgs.length !== 0 ? fretImgs[i][k] : null;
-        let fingerElement = fingerImg ?  (<img className="finger-img" src={this.state.chord.chordImageMap[fingerImg]} alt='finger'/>) : null;
+        let fingerElement = fingerImg ?  (<img className="finger-img" src={this.state.chord.chordImageMap[fingerImg]} alt='finger' data-string={i} data-fret={k+1}/>) : null;
         let fret = 
         (<div className={'fret-r fret-r-' + k} key={k} data-string={i} data-fret={k + 1} onClick={(e) => this.fretClicked(e)}>
-            <img className="string-img" src={this.state.chord.chordImageMap[stringImg]} alt={"string " + i + " fret " + k} data-string={i} data-fret={k+1}></img>
+            <img className="string-img" src={this.state.chord.chordImageMap[stringImg]} alt={"string " + i + " fret " + k} data-string={i} data-fret={k+1}/>
             {fingerElement}
         </div>);
         frets.push(fret);
