@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
+import {withRouter,Link} from 'react-router-dom';
 //import CreateAdmin from './components/auth/create-admin-form';
 import {connect} from 'react-redux';
 import requiresLogin from '../../HOC/requires-login';
@@ -244,6 +244,11 @@ export class CreateChord extends React.Component {
       selectedNote:note
     });
   }
+
+  componentDidMount = () => {
+    //get chords from server
+  }
+
   //chord selectors here then feed chord to chord component
   //need to eventually be able to create, delete, and update chords
   render(){
@@ -268,6 +273,7 @@ export class CreateChord extends React.Component {
             <Chord chord={this.testChordPartialF3} fret={5} fretClickHandler={this.fretClicked}/>
           </Grid>
           {note}
+          <Link to="/test">Home</Link>
         </Grid>
     );
   }
