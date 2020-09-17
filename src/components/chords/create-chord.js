@@ -10,6 +10,7 @@ import SearchList from '../sub-components/search-list';
 export class CreateChord extends React.Component {
   constructor(props) {
     super(props);
+    this.chordTarget = 'name';
     this.testChordC = {
         "name":"C Major",
         "notes":["c","e","g"],
@@ -123,7 +124,7 @@ export class CreateChord extends React.Component {
     };
 
     this.testChordPartialF = {
-      "name":"F Major",
+      "name":"F Major 2f Barre",
       "notes":["f","a","c"],
       "degrees":[1,3,5],
       "notePositions":[
@@ -179,7 +180,7 @@ export class CreateChord extends React.Component {
     };
 
     this.testChordPartialF3 = {
-      "name":"F Major",
+      "name":"F Major 3f Barre",
       "notes":["f","a","c"],
       "degrees":[1,3,5],
       "notePositions":[
@@ -235,7 +236,8 @@ export class CreateChord extends React.Component {
     };
 
     this.state = {
-      selectedNote:null
+      selectedNote:null,
+      chords:null
     }
   }
 
@@ -247,6 +249,13 @@ export class CreateChord extends React.Component {
 
   componentDidMount = () => {
     //get chords from server
+    this.getChords();
+  }
+
+  getChords = () => {
+    this.setState({
+      chords:[this.testChordC,this.testChordFullF,this.testChordPartialF,this.testChordPartialF3]
+    });
   }
 
   //chord selectors here then feed chord to chord component
@@ -256,14 +265,15 @@ export class CreateChord extends React.Component {
     <div style={{textAlign:'center',width:'100%'}}>
       <p>The last selected note is {this.state.selectedNote}</p>
     </div>) : null;
+    console.log('create chords state:',this.state);
     return (
         <Grid container>
           <Grid item lg={6} xs={12}>
-            <SearchList label={"Chord"}/>
+            <SearchList label={"Chord"} target={this.chordTarget} items={this.state.chords}/>
             <Chord chord={this.testChordC} fretClickHandler={this.fretClicked}/>
           </Grid>
           <Grid item lg={6} xs={12}>
-            <SearchList/>
+            <SearchList target={this.chordTarget} items={this.state.chords}/>
             <Chord chord={this.testChordPartialF} fret={5} fretClickHandler={this.fretClicked}/>
           </Grid>
           <Grid item lg={6} xs={12}>
