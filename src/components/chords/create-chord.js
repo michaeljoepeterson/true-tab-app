@@ -258,6 +258,10 @@ export class CreateChord extends React.Component {
     });
   }
 
+  chordChanged = (val) => {
+
+  }
+
   //chord selectors here then feed chord to chord component
   //need to eventually be able to create, delete, and update chords
   render(){
@@ -269,11 +273,11 @@ export class CreateChord extends React.Component {
     return (
         <Grid container>
           <Grid item lg={6} xs={12}>
-            <SearchList label={"Chord"} target={this.chordTarget} items={this.state.chords}/>
+            <SearchList label={"Chord"} target={this.chordTarget} items={this.state.chords} itemSelected={this.chordChanged}/>
             <Chord chord={this.testChordC} fretClickHandler={this.fretClicked}/>
           </Grid>
           <Grid item lg={6} xs={12}>
-            <SearchList target={this.chordTarget} items={this.state.chords}/>
+            <SearchList target={this.chordTarget} items={this.state.chords} itemSelected={this.chordChanged}/>
             <Chord chord={this.testChordPartialF} fret={5} fretClickHandler={this.fretClicked}/>
           </Grid>
           <Grid item lg={6} xs={12}>
