@@ -259,7 +259,7 @@ export class CreateChord extends React.Component {
   }
 
   chordChanged = (val) => {
-
+    console.log(val);
   }
 
   //chord selectors here then feed chord to chord component

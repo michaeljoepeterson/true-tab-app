@@ -5,19 +5,20 @@ import './styles/search-list.css';
 export default class SearchList extends React.Component{
     constructor(props) {
         super(props);
-        //potentially move to update lifecycle method
+        this.currentItems = [];
         this.state = {
             focused:false,
-            inputVal:""
+            inputVal:"",
+            highlightedIndex:null
         };
       }
 
     initKeyboardListeners = () => {
-        document.addEventListener('keydown',this.handleKeyDown);
+        document.addEventListener('keydown',this.controlDropdown);
     }
 
     removeKeyboardListeners = () => {
-        document.removeEventListener('keydown',this.handleKeyDown);
+        document.removeEventListener('keydown',this.controlDropdown);
     }
 
     componentDidMount = () =>{
@@ -28,10 +29,9 @@ export default class SearchList extends React.Component{
         this.removeKeyboardListeners();
     }
 
-    handleKeyDown = (event) =>{
+    controlDropdown = (event) =>{
+        const key = event.key.toLowerCase();
         if(this.state.focused){
-            const key = event.key.toLowerCase();
-            console.log('keypress ',key,this.props.label);
             const keyUp = 'arrowup';
             const keyDown = 'arrowdown';
             const enter = 'enter';
@@ -56,15 +56,58 @@ export default class SearchList extends React.Component{
     }
 
     handleKeyUp = () => {
+        let maxIndex = this.currentItems.length - 1;
+        if(this.state.highlightedIndex === null){
+            this.setState({
+                highlightedIndex:maxIndex
+            });
+            return;
+        }
+        let currentIndex =  this.state.highlightedIndex;
 
+        currentIndex = currentIndex - 1;
+        if(currentIndex < 0){
+            this.setState({
+                highlightedIndex:maxIndex
+            });
+        }
+        else{
+            this.setState({
+                highlightedIndex:currentIndex
+            });
+        }
     }
 
     handleKeyDown = () =>{
+        let maxIndex = this.currentItems.length - 1;
+        if(this.state.highlightedIndex === null){
+            this.setState({
+                highlightedIndex:0
+            });
+            return;
+        }
 
+        let currentIndex =  this.state.highlightedIndex;
+
+        currentIndex = currentIndex + 1;
+
+        if(currentIndex > maxIndex){
+            this.setState({
+                highlightedIndex:0
+            });
+        }
+        else{
+            this.setState({
+                highlightedIndex:currentIndex
+            });
+        }
     }
 
     handleEnter = () =>{
-
+        if(this.state.highlightedIndex || this.state.highlightedIndex === 0){
+            let val = this.currentItems[this.state.highlightedIndex].value;
+            this.setInputVal(val,true);
+        }
     }
 
     //convert items into data for searchlist by target - will be name of chord or any item
@@ -91,15 +134,15 @@ export default class SearchList extends React.Component{
                 return false;
             }
         });
-        
+        this.currentItems = newItems;
         return newItems;
     }
 
     buildResults = (items) => {
-        let results = items.map(item => {
-            const classes = item.highlighted ? 'search-item highlighted' : 'search-item';
+        let results = items.map((item,i) => {
+            const classes = i === this.state.highlightedIndex ? 'search-item highlighted' : 'search-item';
             const result = (
-                <li className={classes} key={item.value}>{item.value}</li>
+                <li onClick={(e) => {this.setInputVal(item.value,true)}} className={classes} key={item.value + i}>{item.value}</li>
             );
 
             return result;
@@ -126,9 +169,26 @@ export default class SearchList extends React.Component{
     inputChanged = (event) => {
         event.persist();
         let val = event.target.value;
+        this.setInputVal(val);
+    }
+
+    setInputVal = (val,updateParent) => {
         this.setState({
             inputVal:val
         });
+
+        if(updateParent){
+            this.props.itemSelected(val);
+        }
+    }
+
+    buildPlaceholderText = () => {
+        if(this.currentItems.length > 0){
+            return 'Eg. ' + this.currentItems[0].value;
+        }
+        else{
+            return '';
+        }
     }
 
     render = () =>{
@@ -138,11 +198,14 @@ export default class SearchList extends React.Component{
         const results = this.props.items ? this.buildResults(filteredItems) : null;
         const searchListClasses = !this.state.focused ? 'search-list-content hide-search' : 'search-list-content';
         const iconClasses = !this.state.focused ? 'search-icon' : 'search-icon opened-icon';
+        const placeholderText = this.props.placeholder ? this.props.placeholder : this.buildPlaceholderText();
+        const inputClasses = this.state.focused ? 'search-list-input highlighted' :'search-list-input'
+
         return(
             <div className="search-list-container">
                 {label}
                 <div className="search-controls">
-                    <input onBlur={(e) => this.inputBlurred(e)} onFocus={(e) => this.inputFocused(e)} className="search-list-input" type="text" value={this.state.inputVal} onChange={(e) => this.inputChanged(e)}/>
+                    <input onBlur={(e) => this.inputBlurred(e)} onFocus={(e) => this.inputFocused(e)} className={inputClasses} type="text" value={this.state.inputVal} onChange={(e) => this.inputChanged(e)} placeholder={placeholderText}/>
                     <KeyboardArrowDownIcon className={iconClasses}/>
                     <div className={searchListClasses}>
                         <ul className="search-results">
