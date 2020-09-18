@@ -8,12 +8,10 @@ export class Chord extends React.Component {
   constructor(props) {
     super(props);
     //potentially move to update lifecycle method
-    let chord = props.chord ? new ChordStruct(props.chord) : new ChordStruct();
     let fret = props.fret ? props.fret : 4;
     this.stringNames = sixStringNames;
     this.noteChecker = new NoteChecker();
     this.state = {
-        chord,
         frets: fret,
         strings:6,
         selectedNote:null  
@@ -22,10 +20,11 @@ export class Chord extends React.Component {
   
   componentDidMount = () => {
     //const testChord = 'C Major';
-    if(!this.props.chord){
+    /*
+    if(!this.chord){
         this.getChord();
     }
-      
+    */
   }
 
   getChord = (chordName) => {
@@ -136,8 +135,8 @@ export class Chord extends React.Component {
 
   buildFrets = (fretNum,stringNum) => {
     let strings = [];
-    let stringImgs = this.getStringImg(this.state.chord.notePositions);
-    let fretImgs = this.getFingerImg(this.state.chord.notePositions,fretNum);
+    let stringImgs = this.getStringImg(this.chord.notePositions);
+    let fretImgs = this.getFingerImg(this.chord.notePositions,fretNum);
     //debugger;
     for(let i = 0;i < stringNum;i++){
       let frets = [];
@@ -148,11 +147,11 @@ export class Chord extends React.Component {
         let fingerElement = null;
         if(fingerImg){
           let fingerClasses = fingerImg.includes('barre') ? 'finger-img barre-img' : 'finger-img';
-          fingerElement = (<img className={fingerClasses} src={this.state.chord.chordImageMap[fingerImg]} alt='finger' data-string={i} data-fret={k+1}/>);
+          fingerElement = (<img className={fingerClasses} src={this.chord.chordImageMap[fingerImg]} alt='finger' data-string={i} data-fret={k+1}/>);
         }
         let fret = 
         (<div className={'fret-r fret-r-' + k} key={k} data-string={i} data-fret={k + 1} onClick={(e) => this.fretClicked(e)}>
-            <img className="string-img" src={this.state.chord.chordImageMap[stringImg]} alt={"string " + i + " fret " + k} data-string={i} data-fret={k+1}/>
+            <img className="string-img" src={this.chord.chordImageMap[stringImg]} alt={"string " + i + " fret " + k} data-string={i} data-fret={k+1}/>
             {fingerElement}
         </div>);
         frets.push(fret);
@@ -168,13 +167,15 @@ export class Chord extends React.Component {
   }
 
   render(){
-    const frets = this.buildFrets(this.state.frets,this.state.strings);
+    this.chord = this.props.chord ? new ChordStruct(this.props.chord) : new ChordStruct();
+    let fret = this.props.fret ? this.props.fret : 4;
+    const frets = this.buildFrets(fret,this.state.strings);
     let note = this.state.selectedNote ? (
       <div style={{textAlign:'center',width:'100%'}}>
         <p>The note is {this.state.selectedNote}</p>
       </div>) : null;
     return (
-        <div className="chord fretMarker" style={{backgroundImage:`url(${this.state.chord.chordImageMap.fretMarker})`}}>
+        <div className="chord fretMarker" style={{backgroundImage:`url(${this.chord.chordImageMap.fretMarker})`}}>
             {frets}
             {note}
         </div>

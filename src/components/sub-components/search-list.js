@@ -163,7 +163,7 @@ export default class SearchList extends React.Component{
             focused:false
         });
 
-        this.props.itemSelected(this.state.inputVal);
+        this.props.itemSelected(this.state.inputVal,this.props.callbackTarget);
     }
 
     inputChanged = (event) => {
@@ -178,7 +178,7 @@ export default class SearchList extends React.Component{
         });
 
         if(updateParent){
-            this.props.itemSelected(val);
+            this.props.itemSelected(val,this.props.callbackTarget);
         }
     }
 

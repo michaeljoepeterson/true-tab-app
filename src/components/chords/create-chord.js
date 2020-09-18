@@ -11,6 +11,14 @@ export class CreateChord extends React.Component {
   constructor(props) {
     super(props);
     this.chordTarget = 'name';
+    this.defaultChordData = [
+      {
+        frets:4
+      },
+      {
+        frets:5
+      }
+    ];
     this.testChordC = {
         "name":"C Major",
         "notes":["c","e","g"],
@@ -118,7 +126,7 @@ export class CreateChord extends React.Component {
               "fret":1,
               "strings":[6],
               "note":"f",
-              "degree":0
+              "degree":1
           }  
       ]
     };
@@ -237,8 +245,9 @@ export class CreateChord extends React.Component {
 
     this.state = {
       selectedNote:null,
-      chords:null
-    }
+      chords:null,
+      selectedChords:[]
+    };
   }
 
   fretClicked = (note) => {
@@ -247,8 +256,23 @@ export class CreateChord extends React.Component {
     });
   }
 
+  buildChordState = (chordData) =>{
+    let selectedChords = chordData.map(data =>{
+      if(data.chord){
+        return data.chord;
+      }
+      else{
+        return null;
+      }
+    })
+    this.setState({
+      selectedChords
+    });
+  }
+
   componentDidMount = () => {
     //get chords from server
+    this.buildChordState(this.defaultChordData);
     this.getChords();
   }
 
@@ -258,8 +282,35 @@ export class CreateChord extends React.Component {
     });
   }
 
-  chordChanged = (val) => {
-    console.log(val);
+  chordChanged = (val,index) => {
+    console.log(val,index);
+    let selectedChord = this.state.chords.find(chord => chord.name === val);
+    if(selectedChord){
+      let selectedChords = [...this.state.selectedChords];
+      selectedChords[index] = selectedChord
+      this.setState({
+        selectedChords
+      });
+    }
+  }
+
+  buildChords = (chordData) => {
+    let chords = chordData.map((data,i) => {
+      console.log(this.state.selectedChords[i]);
+      return (<Chord chord={this.state.selectedChords[i]} fret={data.frets} fretClickHandler={this.fretClicked}/>);
+    });
+
+    return chords;
+  }
+
+  buildSearchLists = (chordData) => {
+    let searchLists = chordData.map((data,i) => {
+      return (
+        <SearchList target={this.chordTarget} items={this.state.chords} itemSelected={this.chordChanged} callbackTarget={i}/>
+      );
+    });
+
+    return searchLists;
   }
 
   //chord selectors here then feed chord to chord component
@@ -270,21 +321,18 @@ export class CreateChord extends React.Component {
       <p>The last selected note is {this.state.selectedNote}</p>
     </div>) : null;
     console.log('create chords state:',this.state);
+    let searchList = this.state.chords ? this.buildSearchLists(this.defaultChordData) : [];
+
+    let chords = this.buildChords(this.defaultChordData);
     return (
         <Grid container>
           <Grid item lg={6} xs={12}>
-            <SearchList label={"Chord"} target={this.chordTarget} items={this.state.chords} itemSelected={this.chordChanged}/>
-            <Chord chord={this.testChordC} fretClickHandler={this.fretClicked}/>
+            {searchList[0]}
+            {chords[0]}
           </Grid>
           <Grid item lg={6} xs={12}>
-            <SearchList target={this.chordTarget} items={this.state.chords} itemSelected={this.chordChanged}/>
-            <Chord chord={this.testChordPartialF} fret={5} fretClickHandler={this.fretClicked}/>
-          </Grid>
-          <Grid item lg={6} xs={12}>
-            <Chord chord={this.testChordFullF} fret={5} fretClickHandler={this.fretClicked}/>
-          </Grid>
-          <Grid item lg={6} xs={12}>
-            <Chord chord={this.testChordPartialF3} fret={5} fretClickHandler={this.fretClicked}/>
+            {searchList[1]}
+            {chords[1]}
           </Grid>
           {note}
           <Link to="/test">Home</Link>

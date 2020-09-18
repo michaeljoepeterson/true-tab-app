@@ -23,7 +23,7 @@ export class App extends React.Component {
               <CreateAdmin />)
             }/>
             <Route exact path="/create-chord"  render={(props) => (
-              <CreateChord />)
+              <CreateChord {...props}/>)
             }/>
         </div>
     );
