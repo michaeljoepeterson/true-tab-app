@@ -6,6 +6,7 @@ import requiresLogin from '../../HOC/requires-login';
 import Chord from './chord';
 import Grid from '@material-ui/core/Grid';
 import SearchList from '../sub-components/search-list';
+import {getChords} from '../../actions/chord-actions';
 
 export class CreateChord extends React.Component {
   constructor(props) {
@@ -273,10 +274,12 @@ export class CreateChord extends React.Component {
   componentDidMount = () => {
     //get chords from server
     this.buildChordState(this.defaultChordData);
-    this.getChords();
+    this.getChordsReq();
   }
 
-  getChords = () => {
+  getChordsReq = async () => {
+    //this.props.dispatch(getChords('Guitar'))
+    await getChords('Guitar',this.props.authToken);
     this.setState({
       chords:[this.testChordC,this.testChordFullF,this.testChordPartialF,this.testChordPartialF3]
     });
