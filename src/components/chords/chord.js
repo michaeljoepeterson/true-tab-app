@@ -135,8 +135,8 @@ export class Chord extends React.Component {
 
   buildFrets = (fretNum,stringNum) => {
     let strings = [];
-    let stringImgs = this.getStringImg(this.chord.notePositions);
-    let fretImgs = this.getFingerImg(this.chord.notePositions,fretNum);
+    let stringImgs = this.getStringImg(this.chord.chordNotes);
+    let fretImgs = this.getFingerImg(this.chord.chordNotes,fretNum);
     //debugger;
     for(let i = 0;i < stringNum;i++){
       let frets = [];

@@ -6,7 +6,7 @@ import requiresLogin from '../../HOC/requires-login';
 import Chord from './chord';
 import Grid from '@material-ui/core/Grid';
 import SearchList from '../sub-components/search-list';
-import {getChords} from '../../actions/chord-actions';
+import {getChordsDispatch} from '../../actions/chord-actions';
 
 export class CreateChord extends React.Component {
   constructor(props) {
@@ -278,16 +278,18 @@ export class CreateChord extends React.Component {
   }
 
   getChordsReq = async () => {
-    //this.props.dispatch(getChords('Guitar'))
-    await getChords('Guitar',this.props.authToken);
+    this.props.dispatch(getChordsDispatch('Guitar'))
+    //await getChords('Guitar',this.props.authToken);
+    /*
     this.setState({
       chords:[this.testChordC,this.testChordFullF,this.testChordPartialF,this.testChordPartialF3]
     });
+    */
   }
 
   chordChanged = (val,index) => {
     console.log(val,index);
-    let selectedChord = this.state.chords.find(chord => chord.name === val);
+    let selectedChord = this.props.chords.find(chord => chord.name === val);
     if(selectedChord){
       let selectedChords = [...this.state.selectedChords];
       selectedChords[index] = selectedChord
@@ -309,7 +311,7 @@ export class CreateChord extends React.Component {
   buildSearchLists = (chordData) => {
     let searchLists = chordData.map((data,i) => {
       return (
-        <SearchList target={this.chordTarget} items={this.state.chords} itemSelected={this.chordChanged} callbackTarget={i}/>
+        <SearchList target={this.chordTarget} items={this.props.chords} itemSelected={this.chordChanged} callbackTarget={i}/>
       );
     });
 
@@ -324,9 +326,10 @@ export class CreateChord extends React.Component {
       <p>The last selected note is {this.state.selectedNote}</p>
     </div>) : null;
     console.log('create chords state:',this.state);
-    let searchList = this.state.chords ? this.buildSearchLists(this.defaultChordData) : [];
+    let searchList = this.props.chords ? this.buildSearchLists(this.defaultChordData) : [];
 
     let chords = this.buildChords(this.defaultChordData);
+    console.log("chords: ",this.props.chords);
     return (
         <Grid container>
           <Grid item lg={6} xs={12}>
@@ -349,6 +352,7 @@ const mapStateToProps = state => ({
   currentUser: state.auth.currentUser,
   authToken:state.auth.authToken,
   error:state.auth.error,
-  testMode:state.auth.testMode
+  testMode:state.auth.testMode,
+  chords:state.chords.chords
 });
 export default requiresLogin()(withRouter(connect(mapStateToProps)(CreateChord)));

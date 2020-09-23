@@ -28,7 +28,7 @@ export default class ChordStruct{
     name = null;
     notes = [];
     degrees = [];
-    notePositions = [];
+    chordNotes = [];
 
     chordImageMap = {
         chordDiagram,
@@ -63,7 +63,7 @@ export default class ChordStruct{
             this.name = options.name ? options.name : null;
             this.notes = options.notes ? options.notes : null;
             this.degrees = options.degrees ? options.degrees : null;
-            this.notePositions = options.notePositions ? options.notePositions : null;
+            this.chordNotes = options.chordNotes ? options.chordNotes : null;
         }
     }
 
